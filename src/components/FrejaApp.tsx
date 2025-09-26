@@ -37,13 +37,15 @@ const FrejaApp = () => {
     alder: ''
   });
 
-  // Update time every second
+  // Update time every second - only when on profile page
   useEffect(() => {
-    const timeInterval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-    return () => clearInterval(timeInterval);
-  }, []);
+    if (currentPage === 'profile') {
+      const timeInterval = setInterval(() => {
+        setCurrentTime(new Date());
+      }, 1000);
+      return () => clearInterval(timeInterval);
+    }
+  }, [currentPage]);
 
   // Countdown timer
   useEffect(() => {

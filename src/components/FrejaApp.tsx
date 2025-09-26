@@ -9,27 +9,33 @@ import qrCodeImage from '@/assets/qr-code.png';
 
 interface UserData {
   namn: string;
+  efternamn: string;
   personnummer: string;
   personnummerEnd: string;
   alder: string;
   imageUrl: string;
 }
 
-type PageType = 'onboarding-name' | 'onboarding-photo' | 'profile';
+type PageType = 'onboarding-info' | 'onboarding-photo' | 'profile';
 
 const FrejaApp = () => {
-  const [currentPage, setCurrentPage] = useState<PageType>('onboarding-name');
+  const [currentPage, setCurrentPage] = useState<PageType>('onboarding-info');
   const [userData, setUserData] = useState<UserData>({
     namn: '',
+    efternamn: '',
     personnummer: '950631',
     personnummerEnd: '4628',
-    alder: '26',
+    alder: '',
     imageUrl: avatarImage
   });
   
   const [currentTime, setCurrentTime] = useState(new Date());
   const [countdown, setCountdown] = useState(120);
-  const [tempName, setTempName] = useState('');
+  const [tempData, setTempData] = useState({
+    namn: '',
+    efternamn: '',
+    alder: ''
+  });
 
   // Update time every second
   useEffect(() => {
@@ -76,33 +82,53 @@ const FrejaApp = () => {
     </div>
   );
 
-  // Onboarding: Name Input
-  const OnboardingNamePage = () => (
+  // Onboarding: Personal Info
+  const OnboardingInfoPage = () => (
     <div className="w-full h-full flex flex-col">
       <FrejaHeader showBackButton={false} />
       
       <div className="flex-1 flex justify-center items-center">
         <div className="flex flex-col items-center w-[90%] space-y-6">
-          <h2 className="text-2xl font-bold text-white mb-8">What's your name?</h2>
+          <h2 className="text-2xl font-bold text-white mb-8 text-center">Fyll i dina uppgifter</h2>
           
           <Input
             className="freja-input"
-            placeholder="Enter your name"
-            value={tempName}
-            onChange={(e) => setTempName(e.target.value)}
+            placeholder="Förnamn"
+            value={tempData.namn}
+            onChange={(e) => setTempData(prev => ({ ...prev, namn: e.target.value }))}
+          />
+          
+          <Input
+            className="freja-input"
+            placeholder="Efternamn"
+            value={tempData.efternamn}
+            onChange={(e) => setTempData(prev => ({ ...prev, efternamn: e.target.value }))}
+          />
+          
+          <Input
+            className="freja-input"
+            placeholder="Ålder"
+            type="number"
+            value={tempData.alder}
+            onChange={(e) => setTempData(prev => ({ ...prev, alder: e.target.value }))}
           />
           
           <Button
             className="freja-btn freja-btn-primary w-full"
             onClick={() => {
-              if (tempName.trim()) {
-                setUserData(prev => ({ ...prev, namn: tempName.trim() }));
+              if (tempData.namn.trim() && tempData.efternamn.trim() && tempData.alder.trim()) {
+                setUserData(prev => ({ 
+                  ...prev, 
+                  namn: tempData.namn.trim(),
+                  efternamn: tempData.efternamn.trim(),
+                  alder: tempData.alder.trim()
+                }));
                 setCurrentPage('onboarding-photo');
               }
             }}
-            disabled={!tempName.trim()}
+            disabled={!tempData.namn.trim() || !tempData.efternamn.trim() || !tempData.alder.trim()}
           >
-            Continue
+            Fortsätt
           </Button>
         </div>
       </div>
@@ -132,11 +158,11 @@ const FrejaApp = () => {
 
     return (
       <div className="w-full h-full flex flex-col">
-        <FrejaHeader onBackClick={() => setCurrentPage('onboarding-name')} />
+        <FrejaHeader onBackClick={() => setCurrentPage('onboarding-info')} />
         
         <div className="flex-1 flex justify-center items-center">
           <div className="flex flex-col items-center w-[90%] space-y-6">
-            <h2 className="text-2xl font-bold text-white mb-8 text-center">Take a picture of yourself</h2>
+            <h2 className="text-2xl font-bold text-white mb-8 text-center">Ta ett foto av dig själv</h2>
             
             <div className="w-48 h-48 rounded-full bg-white/20 flex items-center justify-center mb-8">
               <img 
@@ -150,14 +176,14 @@ const FrejaApp = () => {
               className="freja-btn freja-btn-primary w-full"
               onClick={openImageInput}
             >
-              Take Photo
+              Ta foto
             </Button>
             
             <Button
               className="freja-btn w-full"
               onClick={() => setCurrentPage('profile')}
             >
-              Skip for now
+              Hoppa över
             </Button>
           </div>
         </div>
@@ -182,9 +208,10 @@ const FrejaApp = () => {
         
         {/* User Info */}
         <div className="text-center text-white space-y-2 mb-8">
-          <p className="text-lg">Expiry date: <span className="font-bold">2029-07-21</span></p>
-          <p className="text-lg">Name: <span className="font-bold">{userData.namn || 'Anna Marielle Sara'}</span></p>
-          <p className="text-lg">Age: <span className="font-bold">{userData.alder}</span></p>
+          <p className="text-lg">Giltigt t.o.m: <span className="font-bold">2029-08-15</span></p>
+          <p className="text-lg">Efternamn: <span className="font-bold">{userData.efternamn || 'Andersson'}</span></p>
+          <p className="text-lg">Namn: <span className="font-bold">{userData.namn || 'Anna Marielle Sara'}</span></p>
+          <p className="text-lg">Ålder: <span className="font-bold">{userData.alder || '26'}</span></p>
         </div>
         
         {/* QR Panel */}
@@ -223,7 +250,7 @@ const FrejaApp = () => {
           
           {/* Check ID Text */}
           <div className="text-center text-white text-sm">
-            <p>Check ID on: kontroll.frejaeid.com</p>
+            <p>Kolla ID på: kontroll.frejaeid.com</p>
           </div>
         </div>
       </div>
@@ -233,14 +260,14 @@ const FrejaApp = () => {
   // Render current page
   const renderCurrentPage = () => {
     switch (currentPage) {
-      case 'onboarding-name':
-        return <OnboardingNamePage />;
+      case 'onboarding-info':
+        return <OnboardingInfoPage />;
       case 'onboarding-photo':
         return <OnboardingPhotoPage />;
       case 'profile':
         return <ProfilePage />;
       default:
-        return <OnboardingNamePage />;
+        return <OnboardingInfoPage />;
     }
   };
 

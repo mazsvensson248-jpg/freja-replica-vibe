@@ -2,41 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+/* Freja Digital ID Design System - Swedish Digital Identity App 
 All colors MUST be HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Freja Brand Colors */
+    --background: 231 46% 41%; /* #3b3e98 - Main purple */
+    --foreground: 0 0% 100%; /* White text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%; /* White cards */
+    --card-foreground: 231 46% 41%; /* Purple text on cards */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 231 46% 41%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 231 46% 41%; /* #3b3e98 - Freja purple */
+    --primary-foreground: 0 0% 100%; /* White */
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 231 46% 41%; /* Same as primary for consistency */
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 230 46% 44%; /* #3e3a94 - Slightly different purple */
+    --muted-foreground: 0 0% 100%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 197 70% 52%; /* #1681d3 - Blue for gradient */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 0 0% 90%; /* Light border */
+    --input: 0 0% 100%; /* White input backgrounds */
+    --ring: 231 46% 41%; /* Purple focus ring */
 
-    --radius: 0.5rem;
+    --radius: 0.625rem; /* 10px rounded corners like original */
+    
+    /* Freja Gradients */
+    --gradient-main: linear-gradient(180deg, hsl(231, 46%, 41%), hsl(197, 70%, 52%)); /* #3b3e98 to #1681d3 */
+    --gradient-panel: linear-gradient(180deg, hsl(230, 46%, 44%), hsl(230, 46%, 44%)); /* #3e3a94 solid */
+    
+    /* Freja Animations */
+    --spin-duration: 5s;
+    --transition-smooth: all 0.3s ease;
 
     --sidebar-background: 0 0% 98%;
 
@@ -54,52 +63,70 @@ All colors MUST be HSL.
 
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body, html, #root {
+    font-family: 'Montserrat', sans-serif;
   }
 
   body {
-    @apply bg-background text-foreground;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: var(--gradient-main);
+  }
+}
+
+@layer components {
+  /* Freja Button Styles */
+  .freja-btn {
+    @apply bg-white text-card-foreground font-bold rounded-[10px] h-[50px] w-full max-w-[390px] px-5 cursor-pointer;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .freja-btn-primary {
+    @apply bg-primary text-primary-foreground;
+  }
+  
+  /* Freja Input Styles */
+  .freja-input {
+    @apply bg-white rounded-[10px] h-[50px] px-5 font-bold max-w-[390px];
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  /* Freja Face/Avatar Animation */
+  .freja-spin {
+    animation: frejaSpinAnimation var(--spin-duration) infinite linear;
+  }
+  
+  /* Freja Panel Styles */
+  .freja-panel {
+    @apply bg-muted rounded-[10px] transition-transform duration-300;
+  }
+  
+  .freja-card {
+    @apply bg-card rounded-[15px] text-center;
+  }
+}
+
+@layer utilities {
+  /* Freja Animations */
+  @keyframes frejaSpinAnimation {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 }

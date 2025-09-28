@@ -221,17 +221,17 @@ const FrejaApp = () => {
           {/* Time/Date/Countdown Header */}
           <div className="flex items-center justify-around mb-4 text-white text-center">
             <div>
-              <p className="text-sm opacity-80">Time</p>
+              <p className="text-sm opacity-80">Tid</p>
               <p className="text-lg font-bold">{formatTime(currentTime)}</p>
             </div>
             <div>
-              <p className="text-sm opacity-80">Date</p>
+              <p className="text-sm opacity-80">Datum</p>
               <p className="text-lg font-bold">{formatDate(currentTime)}</p>
             </div>
             <div>
-              <p className="text-sm opacity-80">Valid for</p>
+              <p className="text-sm opacity-80">Giltigt i</p>
               <p className="text-lg font-bold">
-                {countdown} <span className="text-sm font-normal">sec</span>
+                {countdown} <span className="text-sm font-normal">sek</span>
               </p>
             </div>
           </div>

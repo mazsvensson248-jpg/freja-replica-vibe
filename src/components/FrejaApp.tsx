@@ -201,12 +201,12 @@ const FrejaApp = () => {
 
   // Main Profile Page
   const ProfilePage = () => (
-    <div className="w-full h-full flex flex-col">
+    <div className="w-full min-h-screen pb-8">
       <FrejaHeader showBackButton={false} />
       
-      <div className="flex-1 flex flex-col items-center px-4">
+      <div className="flex flex-col items-center px-4 space-y-6">
         {/* Profile Photo */}
-        <div className="w-48 h-48 rounded-full bg-white mb-6 flex items-center justify-center">
+        <div className="w-48 h-48 rounded-full bg-white flex items-center justify-center">
           <img 
             src={userData.imageUrl} 
             alt="Profile" 

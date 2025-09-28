@@ -37,12 +37,12 @@ const FrejaApp = () => {
     alder: ''
   });
 
-  // Update time every second - only when on profile page
+  // Update time every 5 seconds - only when on profile page to reduce re-renders
   useEffect(() => {
     if (currentPage === 'profile') {
       const timeInterval = setInterval(() => {
         setCurrentTime(new Date());
-      }, 1000);
+      }, 5000); // Update every 5 seconds instead of every second
       return () => clearInterval(timeInterval);
     }
   }, [currentPage]);
@@ -51,7 +51,12 @@ const FrejaApp = () => {
   useEffect(() => {
     if (currentPage === 'profile' && countdown > 0) {
       const countdownInterval = setInterval(() => {
-        setCountdown(prev => prev - 1);
+        setCountdown(prev => {
+          if (prev <= 1) {
+            return 0; // Stop at 0
+          }
+          return prev - 1;
+        });
       }, 1000);
       return () => clearInterval(countdownInterval);
     }

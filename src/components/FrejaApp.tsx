@@ -237,7 +237,7 @@ const FrejaApp = () => {
             <div>
               <p className="text-sm opacity-80">Giltigt i</p>
               <p className="text-lg font-bold">
-                {formatCountdown(countdown)} <span className="text-sm font-normal">timmar</span>
+                2 <span className="text-sm font-normal">år</span>
               </p>
             </div>
           </div>

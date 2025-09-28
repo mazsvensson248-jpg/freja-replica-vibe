@@ -274,7 +274,7 @@ const FrejaApp = () => {
   };
 
   return (
-    <div className="w-full h-screen overflow-hidden">
+    <div className="w-full min-h-screen">
       {renderCurrentPage()}
     </div>
   );

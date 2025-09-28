@@ -30,7 +30,7 @@ const FrejaApp = () => {
   });
   
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [countdown, setCountdown] = useState(120);
+  const [countdown, setCountdown] = useState(7200000); // 2000 hours in seconds
   const [tempData, setTempData] = useState({
     namn: '',
     efternamn: '',
@@ -51,16 +51,17 @@ const FrejaApp = () => {
   useEffect(() => {
     if (currentPage === 'profile' && countdown > 0) {
       const countdownInterval = setInterval(() => {
-        setCountdown(prev => {
-          if (prev <= 1) {
-            return 0; // Stop at 0
-          }
-          return prev - 1;
-        });
+        setCountdown(prev => prev - 1);
       }, 1000);
       return () => clearInterval(countdownInterval);
     }
   }, [currentPage, countdown]);
+
+  // Convert seconds to hours for display
+  const formatCountdown = (seconds: number) => {
+    const hours = Math.floor(seconds / 3600);
+    return hours;
+  };
 
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString('sv-SE', { 
@@ -236,7 +237,7 @@ const FrejaApp = () => {
             <div>
               <p className="text-sm opacity-80">Giltigt i</p>
               <p className="text-lg font-bold">
-                {countdown} <span className="text-sm font-normal">sek</span>
+                {formatCountdown(countdown)} <span className="text-sm font-normal">timmar</span>
               </p>
             </div>
           </div>

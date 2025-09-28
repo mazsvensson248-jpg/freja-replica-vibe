@@ -210,7 +210,7 @@ const FrejaApp = () => {
         
         {/* User Info */}
         <div className="text-center text-white space-y-2 mb-8">
-          <p className="text-lg">Giltigt t.o.m: <span className="font-bold">2029-08-15</span></p>
+          <p className="text-lg">Giltigt till: <span className="font-bold">2029-08-15</span></p>
           <p className="text-lg">Efternamn: <span className="font-bold">{userData.efternamn || 'Andersson'}</span></p>
           <p className="text-lg">Namn: <span className="font-bold">{userData.namn || 'Anna Marielle Sara'}</span></p>
           <p className="text-lg">Ålder: <span className="font-bold">{userData.alder || '26'}</span></p>

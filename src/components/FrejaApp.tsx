@@ -201,10 +201,10 @@ const FrejaApp = () => {
 
   // Main Profile Page
   const ProfilePage = () => (
-    <div className="w-full min-h-screen pb-8">
+    <div className="w-full min-h-screen overflow-y-auto pb-8">
       <FrejaHeader showBackButton={false} />
       
-      <div className="flex flex-col items-center px-4 space-y-6">
+      <div className="flex flex-col items-center px-4 space-y-6 pb-8">
         {/* Profile Photo */}
         <div className="w-48 h-48 rounded-full bg-white flex items-center justify-center">
           <img 
@@ -280,7 +280,7 @@ const FrejaApp = () => {
   };
 
   return (
-    <div className="w-full min-h-screen">
+    <div className="w-full min-h-screen overflow-y-auto">
       {renderCurrentPage()}
     </div>
   );
